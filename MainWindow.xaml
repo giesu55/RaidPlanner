@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RaidPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="RaidPlanner v0.1" Height="450" Width="800">
+    <Grid Background="#FF414141">
+        <Label Content="Let's Plan Some Raids!" HorizontalAlignment="Center" Height="73" VerticalAlignment="Top" Width="438" Foreground="#FFFFF9F0" FontSize="40" FontFamily="Yu Gothic Medium"/>
+        <TabControl Margin="0,67,0,0">
+            <TabItem Header="Plans 🗺️">
+                <Grid Background="#FFFFF9F0"/>
+            </TabItem>
+            <TabItem Header="Wishlist 🎁">
+                <Grid Background="#FFFFF9F0"/>
+            </TabItem>
+            <TabItem Header="Notebook 🗒️">
+                <Grid Background="#FFFFF9F0"/>
+            </TabItem>
+            <TabItem Header="History ⌚">
+                <Grid Background="#FFFFF9F0"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
