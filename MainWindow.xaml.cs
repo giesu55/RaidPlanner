@@ -52,6 +52,29 @@ namespace RaidPlanner
             }
         }
 
+        private void EditNoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotesListBox.SelectedItem is Note selectedNote)
+            {
+                AddNoteWindow window = new AddNoteWindow(selectedNote.Title, selectedNote.Content);
+
+                bool? result = window.ShowDialog();
+
+                if (result == true)
+                {
+                    selectedNote.Title = window.NoteTitle;
+                    selectedNote.Content = window.NoteContent;
+
+                    NotesListBox.Items.Refresh();
+                    NoteContentTextBox.Text = selectedNote.Content;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a note to edit.");
+            }
+        }
+
         private void NotesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (NotesListBox.SelectedItem is Note selectedNote)

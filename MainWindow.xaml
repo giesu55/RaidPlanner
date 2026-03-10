@@ -36,8 +36,9 @@
                         <!-- Przyciski -->
 
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
-                            <Button Content="Add Note" Width="100" Height="30" Click="AddNoteButton_Click" Background="#FF34CF01"/>
-                            <Button Content="Delete Note" Width="100" Height="30" Margin="10,0,0,0" Click="DeleteNoteButton_Click" Background="#FFE80000"/>
+                            <Button Content="Add Note" Width="75" Height="30" Click="AddNoteButton_Click" Background="#FF34CF01"/>
+                            <Button Content="Delete Note" Width="75" Height="30" Margin="10,0,0,0" Click="DeleteNoteButton_Click" Background="#FFE80000"/>
+                            <Button Content="Edit Note" Margin="10,0,0,0" Click="EditNoteButton_Click" Width="80"/>
                         </StackPanel>
 
                         <!-- Lista notatek -->

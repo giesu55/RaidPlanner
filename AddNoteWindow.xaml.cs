@@ -7,9 +7,12 @@ namespace RaidPlanner
         public string NoteTitle { get; private set; }
         public string NoteContent { get; private set; }
 
-        public AddNoteWindow()
+        public AddNoteWindow(string title = "", string content = "")
         {
             InitializeComponent();
+
+            TitleTextBox.Text = title;
+            ContentTextBox.Text = content;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
