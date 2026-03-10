@@ -16,10 +16,118 @@ namespace RaidPlanner
         {
             InitializeComponent();
 
+            LoadWishlists();
+            WishlistListBox.ItemsSource = wishlists;
+
             NotesListBox.ItemsSource = NotesList;
             LoadNotesFromFile();
 
             this.Closing += MainWindow_Closing;
+        }
+
+        private ObservableCollection<Wishlist> wishlists = new ObservableCollection<Wishlist>();
+        private string wishlistFile = "wishlists.json";
+
+        private void AddWishlistButton_Click(object sender, RoutedEventArgs e)
+        {
+            string name = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter wishlist name:",
+                "New Wishlist",
+                "");
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                wishlists.Add(new Wishlist { Name = name });
+            }
+        }
+
+        private void DeleteWishlistButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (WishlistListBox.SelectedItem is Wishlist selected)
+            {
+                wishlists.Remove(selected);
+            }
+            else
+            {
+                MessageBox.Show("Select a wishlist first.");
+            }
+        }
+
+        private void WishlistListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WishlistListBox.SelectedItem is Wishlist selected)
+            {
+                WishlistItemsListBox.ItemsSource = selected.Items;
+            }
+        }
+
+        private void AddItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (WishlistListBox.SelectedItem is Wishlist selected)
+            {
+                string item = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Enter item name:",
+                    "Add Item",
+                    "");
+
+                selected.Items.Add(new WishlistItem
+                {
+                    Name = item,
+                    IsFound = false
+                });
+            }
+            else
+            {
+                MessageBox.Show("Select a wishlist first.");
+            }
+        }
+
+        private void DeleteItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (WishlistListBox.SelectedItem is Wishlist selected &&
+                WishlistItemsListBox.SelectedItem is WishlistItem item)
+            {
+                selected.Items.Remove(item);
+            }
+        }
+
+        private void SaveWishlists()
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(wishlists);
+                File.WriteAllText(wishlistFile, json);
+            }
+            catch
+            {
+                MessageBox.Show("Error saving wishlists.");
+            }
+        }
+
+        private void LoadWishlists()
+        {
+            try
+            {
+                if (File.Exists(wishlistFile))
+                {
+                    string json = File.ReadAllText(wishlistFile);
+
+                    var loaded = JsonSerializer.Deserialize<ObservableCollection<Wishlist>>(json);
+
+                    if (loaded != null)
+                        wishlists = loaded;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Error loading wishlists.");
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            SaveWishlists();
+            base.OnClosed(e);
         }
 
         private void AddNoteButton_Click(object sender, RoutedEventArgs e)
@@ -130,3 +238,6 @@ namespace RaidPlanner
         public string Content { get; set; }
     }
 }
+
+
+

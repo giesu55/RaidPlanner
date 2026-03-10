@@ -13,7 +13,79 @@
                 <Grid Background="#FFFFF9F0"/>
             </TabItem>
             <TabItem Header="Wishlist 🎁">
-                <Grid Background="#FFFFF9F0"/>
+                <Grid Background="#FFFFF9F0" Margin="10">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Przyciski wishlist -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+
+                        <Button Content="Add Wishlist"
+                Width="110"
+                Height="30"
+                Click="AddWishlistButton_Click"/>
+
+                        <Button Content="Delete Wishlist"
+                Width="110"
+                Height="30"
+                Margin="10,0,0,0"
+                Click="DeleteWishlistButton_Click"/>
+
+                    </StackPanel>
+
+                    <!-- Lista wishlist -->
+                    <ListBox Name="WishlistListBox"
+             Grid.Row="1"
+             DisplayMemberPath="Name"
+             SelectionChanged="WishlistListBox_SelectionChanged"/>
+
+                    <!-- Prawa strona -->
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+
+                            <Button Content="Add Item"
+                    Width="90"
+                    Click="AddItemButton_Click"/>
+
+                            <Button Content="Delete Item"
+                    Width="90"
+                    Margin="10,0,0,0"
+                    Click="DeleteItemButton_Click"/>
+
+                        </StackPanel>
+
+                        <ListBox Name="WishlistItemsListBox">
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <CheckBox IsChecked="{Binding IsFound}"
+                          Margin="0,0,10,0"/>
+
+                                        <TextBlock Text="{Binding Name}"
+                           VerticalAlignment="Center"/>
+
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+
+                    </StackPanel>
+
+                </Grid>
             </TabItem>
             <TabItem Header="Notebook 🗒️">
                 <Grid Background="#FFFFF9F0">

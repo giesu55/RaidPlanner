@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RaidPlanner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b1c27dedb01da97fd27e597da8f861ff6f08162")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+331b179c34bf798b67dbf46009f96b2ab2bd837b")]
 [assembly: System.Reflection.AssemblyProductAttribute("RaidPlanner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RaidPlanner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
