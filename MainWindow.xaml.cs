@@ -9,12 +9,16 @@ namespace RaidPlanner
     public partial class MainWindow : Window
     {
         private readonly string notesFilePath = "notes.json";
+        private string plansFile = "plans.json";
 
         public ObservableCollection<Note> NotesList { get; set; } = new ObservableCollection<Note>();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            LoadPlans();
+            PlansListBox.ItemsSource = plans;
 
             LoadWishlists();
             WishlistListBox.ItemsSource = wishlists;
@@ -24,6 +28,140 @@ namespace RaidPlanner
 
             this.Closing += MainWindow_Closing;
         }
+
+        private ObservableCollection<RaidPlan> plans = new ObservableCollection<RaidPlan>();
+
+        private void AddPlanButton_Click(object sender, RoutedEventArgs e)
+        {
+            string map = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter map name:",
+                "New Raid Plan",
+                "");
+
+            if (string.IsNullOrWhiteSpace(map))
+                return;
+
+            string objective = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter objective:",
+                "Raid Plan",
+                "");
+
+            string gear = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter gear:",
+                "Raid Plan",
+                "");
+
+            string notes = Microsoft.VisualBasic.Interaction.InputBox(
+                "Additional notes:",
+                "Raid Plan",
+                "");
+
+            string wishlist = Microsoft.VisualBasic.Interaction.InputBox(
+                "Enter wishlist name to use:",
+                "Raid Plan",
+                "");
+
+            plans.Add(new RaidPlan
+            {
+                MapName = map,
+                Objective = objective,
+                Gear = gear,
+                Notes = notes,
+                WishlistName = wishlist
+            });
+        }
+
+        private void DeletePlanButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlansListBox.SelectedItem is RaidPlan selected)
+            {
+                plans.Remove(selected);
+            }
+        }
+
+        private void PlansListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PlansListBox.SelectedItem is RaidPlan selected)
+            {
+                ObjectiveText.Text = selected.Objective;
+                GearText.Text = selected.Gear;
+                NotesText.Text = selected.Notes;
+                WishlistText.Text = selected.WishlistName;
+            }
+        }
+
+        private void EditPlanButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlansListBox.SelectedItem is RaidPlan selected)
+            {
+                string map = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Edit map name:",
+                    "Edit Plan",
+                    selected.MapName);
+
+                string objective = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Edit objective:",
+                    "Edit Plan",
+                    selected.Objective);
+
+                string gear = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Edit gear:",
+                    "Edit Plan",
+                    selected.Gear);
+
+                string notes = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Edit notes:",
+                    "Edit Plan",
+                    selected.Notes);
+
+                string wishlist = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Edit wishlist:",
+                    "Edit Plan",
+                    selected.WishlistName);
+
+                selected.MapName = map;
+                selected.Objective = objective;
+                selected.Gear = gear;
+                selected.Notes = notes;
+                selected.WishlistName = wishlist;
+
+                PlansListBox.Items.Refresh();
+            }
+        }
+
+        private void SavePlans()
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(plans);
+                File.WriteAllText(plansFile, json);
+            }
+            catch
+            {
+                MessageBox.Show("Error saving plans.");
+            }
+        }
+
+        private void LoadPlans()
+        {
+            try
+            {
+                if (File.Exists(plansFile))
+                {
+                    string json = File.ReadAllText(plansFile);
+
+                    var loaded = JsonSerializer.Deserialize<ObservableCollection<RaidPlan>>(json);
+
+                    if (loaded != null)
+                        plans = loaded;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Error loading plans.");
+            }
+        }
+
 
         private ObservableCollection<Wishlist> wishlists = new ObservableCollection<Wishlist>();
         private string wishlistFile = "wishlists.json";
@@ -127,6 +265,7 @@ namespace RaidPlanner
         protected override void OnClosed(EventArgs e)
         {
             SaveWishlists();
+            SavePlans();
             base.OnClosed(e);
         }
 
