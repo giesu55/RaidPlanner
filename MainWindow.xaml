@@ -176,7 +176,44 @@
                 </Grid>
             </TabItem>
             <TabItem Header="History ⌚">
-                <Grid Background="#FFFFF9F0"/>
+				<Grid Background="#FFFFF9F0" Margin="10">
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+
+					<StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+
+						<Button Content="Add Entry"
+								Width="100"
+								Height="30"
+								Click="AddHistoryButton_Click"/>
+
+						<Button Content="Delete Entry"
+								Width="100"
+								Height="30"
+								Margin="10,0,0,0"
+								Click="DeleteHistoryButton_Click"/>
+
+					</StackPanel>
+
+					<ListBox Name="HistoryListBox" Grid.Row="1">
+
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel>
+									<TextBlock Text="{Binding MapName}" FontWeight="Bold"/>
+									<TextBlock Text="{Binding WishlistName}"/>
+									<TextBlock Text="{Binding FoundItems}"/>
+									<TextBlock Text="{Binding Date}" FontSize="10"/>
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+
+					</ListBox>
+
+				</Grid>
             </TabItem>
         </TabControl>
     </Grid>

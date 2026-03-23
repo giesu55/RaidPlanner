@@ -26,6 +26,9 @@ namespace RaidPlanner
             NotesListBox.ItemsSource = NotesList;
             LoadNotesFromFile();
 
+            LoadHistory();
+            HistoryListBox.ItemsSource = history;
+
             this.Closing += MainWindow_Closing;
         }
 
@@ -266,6 +269,7 @@ namespace RaidPlanner
         {
             SaveWishlists();
             SavePlans();
+            SaveHistory();
             base.OnClosed(e);
         }
 
@@ -361,6 +365,78 @@ namespace RaidPlanner
             catch (Exception ex)
             {
                 MessageBox.Show("Error saving notes: " + ex.Message);
+            }
+        }
+
+        private ObservableCollection<HistoryEntry> history = new ObservableCollection<HistoryEntry>();
+        private string historyFile = "history.json";
+
+        private void AddHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            string map = Microsoft.VisualBasic.Interaction.InputBox(
+                "Map name:",
+                "History",
+                "");
+
+            string wishlist = Microsoft.VisualBasic.Interaction.InputBox(
+                "Wishlist used:",
+                "History",
+                "");
+
+            string items = Microsoft.VisualBasic.Interaction.InputBox(
+                "What did you find:",
+                "History",
+                "");
+
+            string date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+
+            history.Add(new HistoryEntry
+            {
+                MapName = map,
+                WishlistName = wishlist,
+                FoundItems = items,
+                Date = date
+            });
+        }
+
+        private void DeleteHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (HistoryListBox.SelectedItem is HistoryEntry selected)
+            {
+                history.Remove(selected);
+            }
+        }
+
+        private void SaveHistory()
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(history);
+                File.WriteAllText(historyFile, json);
+            }
+            catch
+            {
+                MessageBox.Show("Error saving history.");
+            }
+        }
+
+        private void LoadHistory()
+        {
+            try
+            {
+                if (File.Exists(historyFile))
+                {
+                    string json = File.ReadAllText(historyFile);
+
+                    var loaded = JsonSerializer.Deserialize<ObservableCollection<HistoryEntry>>(json);
+
+                    if (loaded != null)
+                        history = loaded;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Error loading history.");
             }
         }
 
