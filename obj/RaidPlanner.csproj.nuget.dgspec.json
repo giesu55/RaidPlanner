@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Glive\\source\\repos\\RaidPlanner\\RaidPlanner\\RaidPlanner.csproj": {}
+    "C:\\Users\\Glive\\source\\repos\\raidplanner\\RaidPlanner\\RaidPlanner.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Glive\\source\\repos\\RaidPlanner\\RaidPlanner\\RaidPlanner.csproj": {
+    "C:\\Users\\Glive\\source\\repos\\raidplanner\\RaidPlanner\\RaidPlanner.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Glive\\source\\repos\\RaidPlanner\\RaidPlanner\\RaidPlanner.csproj",
+        "projectUniqueName": "C:\\Users\\Glive\\source\\repos\\raidplanner\\RaidPlanner\\RaidPlanner.csproj",
         "projectName": "RaidPlanner",
-        "projectPath": "C:\\Users\\Glive\\source\\repos\\RaidPlanner\\RaidPlanner\\RaidPlanner.csproj",
+        "projectPath": "C:\\Users\\Glive\\source\\repos\\raidplanner\\RaidPlanner\\RaidPlanner.csproj",
         "packagesPath": "C:\\Users\\Glive\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Glive\\source\\repos\\RaidPlanner\\RaidPlanner\\obj\\",
         "projectStyle": "PackageReference",
